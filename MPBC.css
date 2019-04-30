@@ -1,0 +1,108 @@
+.saopopup-container {
+  width: 20%;
+  height: 39px;
+  padding: 1px;
+  overflow: hidden;
+  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+
+  box-shadow: 0 0 15px #d7d7dd;
+  transition: height 0.1s linear;
+}
+
+.saopopup-frame {
+  max-width: 100%;
+  border-radius: 2px;
+
+  text-align: center;
+}
+
+.saopopup-frame .saopopup-title {
+  line-height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+
+  background: linear-gradient(#f1f1f1, #fbfbfb);
+}
+
+.saopopup-frame .saopopup-text {
+  padding: 10px 0;
+  
+  font-size: 13px;
+
+  background-color: #e4e4e4;
+  box-shadow: 0px 20px 20px -20px #a3a3a3 inset, 0px -20px 20px -20px #a3a3a3 inset;
+}
+
+.saopopup-frame .saopopup-bottom {
+  display: flex;
+
+  line-height: 50px;
+
+  background: linear-gradient(to top, #ffffff, #f9f9f9);
+}
+
+.saopopup-button-no,
+.saopopup-button-ok {
+  flex: 1;
+  margin: 0 15%;
+  cursor: pointer;
+}
+.saopopup-button-no{
+  color: red
+}
+.saopopup-button-ok {
+  color: blue
+}
+.saopopup-open {
+  display: block;
+  animation: saopopupWidth 0.1s linear forwards;
+}
+
+.saopopup-close {
+  display: none;
+}
+
+@keyframes saopopupWidth {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 20%;
+  }
+}
+
+@-webkit-keyframes saopopupWidth {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 20%;
+  }
+}
+
+@-moz-keyframes saopopupWidth {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 20%;
+  }
+}
+
+@-o-keyframes saopopupWidth {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 20%;
+  }
+}
