@@ -4,7 +4,8 @@ function MPBpopup(theNode, json) {
     title: "Message",
     text: "Nothing in here",
     okFunc: () => { },
-    noFunc: () => { this.hiddenPopup() }
+    noFunc: () => { this.hiddenPopup() },
+    oneKey:false
   }
   _setData(json);
   // 若输入的节点class或id不存在，抛出异常
@@ -29,6 +30,7 @@ function MPBpopup(theNode, json) {
       if (json.text) _content.text = json.text;
       if (json.okFunc) _content.okFunc = json.okFunc;
       if (json.noFunc) _content.noFunc = json.noFunc;
+      if (json.oneKey) _content.oneKey = json.oneKey;
     } else {
       return;
     }
@@ -54,6 +56,11 @@ function MPBpopup(theNode, json) {
     _setData(json)//不输入则使用默认或上一次输入的值
     _node.classList.remove('saopopup-close');
     _node.classList.add('saopopup-open');
+    if(_content.oneKey){
+      _node.getElementsByClassName('saopopup-button-no')[0].style.display = 'none';
+    }else{
+      _node.getElementsByClassName('saopopup-button-no')[0].style.display = 'block';
+    }
     _setContent();
     setTimeout(() => {
       _node.style.height = _getPopupHeight() + 'px';
