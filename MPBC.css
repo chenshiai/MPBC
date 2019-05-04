@@ -1,5 +1,4 @@
 .saopopup-container {
-  width: 300px;
   height: 39px;
   border: 1px #ffffff solid;
   overflow: hidden;
@@ -11,7 +10,7 @@
   z-index: 99;
 
   box-shadow: 0 0 15px #d7d7dd;
-  transition: height 0.1s linear;
+  transition: all 0.1s linear;
 }
 
 .saopopup-frame {
@@ -50,7 +49,8 @@
 .saopopup-button-no,
 .saopopup-button-ok {
   flex: 1;
-  margin: 0 15%;
+  max-width: 50px;
+  margin: 0 auto;
   cursor: pointer;
 }
 .saopopup-button-no{
@@ -61,49 +61,8 @@
 }
 .saopopup-open {
   display: block;
-  animation: saopopupWidth 0.1s linear forwards;
 }
 
 .saopopup-close {
   display: none;
-}
-
-@keyframes saopopupWidth {
-  0% {
-    width: 0;
-  }
-
-  100% {
-    width: 300px;
-  }
-}
-
-@-webkit-keyframes saopopupWidth {
-  0% {
-    width: 0;
-  }
-
-  100% {
-    width: 300px;
-  }
-}
-
-@-moz-keyframes saopopupWidth {
-  0% {
-    width: 0;
-  }
-
-  100% {
-    width: 300px;
-  }
-}
-
-@-o-keyframes saopopupWidth {
-  0% {
-    width: 0;
-  }
-
-  100% {
-    width: 300px;
-  }
 }

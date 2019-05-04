@@ -5,7 +5,8 @@ function MPBpopup(theNode, json) {
     text: "Nothing in here",
     okFunc: () => { },
     noFunc: () => { this.hiddenPopup() },
-    oneKey:false
+    oneKey: false,
+    width: 200
   }
   _setData(json);
   // 若输入的节点class或id不存在，抛出异常
@@ -22,6 +23,7 @@ function MPBpopup(theNode, json) {
   _node.getElementsByClassName('saopopup-button-ok')[0].onclick = function () {
     _content.okFunc();
   }
+  _node.style.width = '0px';
 
   // 设置对象属性，用于数据合法性判断
   function _setData(json) {
@@ -31,6 +33,7 @@ function MPBpopup(theNode, json) {
       if (json.okFunc) _content.okFunc = json.okFunc;
       if (json.noFunc) _content.noFunc = json.noFunc;
       if (json.oneKey) _content.oneKey = json.oneKey;
+      if (json.width) _content.width = json.width;
     } else {
       return;
     }
@@ -46,32 +49,34 @@ function MPBpopup(theNode, json) {
     _node.getElementsByClassName('saopopup-title')[0].innerHTML = _content.title;
     _node.getElementsByClassName('saopopup-text')[0].innerHTML = _content.text;
   }
-  function setCallback(json) {
-    _content = json || _content;
-
-  }
 
   // 外部可调用方法：打开弹窗，输入json设置弹窗内容
   this.showPopup = function (json) {
     _setData(json)//不输入则使用默认或上一次输入的值
     _node.classList.remove('saopopup-close');
     _node.classList.add('saopopup-open');
-    if(_content.oneKey){
+    if (_content.oneKey) {
       _node.getElementsByClassName('saopopup-button-no')[0].style.display = 'none';
-    }else{
+    } else {
       _node.getElementsByClassName('saopopup-button-no')[0].style.display = 'block';
     }
     _setContent();
     setTimeout(() => {
+      _node.style.width = _content.width + 'px';
+    }, 20)
+    setTimeout(() => {
       _node.style.height = _getPopupHeight() + 'px';
-    }, 300)
+    }, 220)
   }
   // 外部可调用方法：关闭弹窗
   this.hiddenPopup = function () {
     _node.classList.remove('saopopup-open');
     _node.style.height = '39px';
     setTimeout(() => {
-      _node.classList.add('saopopup-close');
+      _node.style.width = '0px';
     }, 200)
+    setTimeout(() => {
+      _node.classList.add('saopopup-close');
+    }, 300)
   }
 }
