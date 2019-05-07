@@ -41,7 +41,7 @@
 .saopopup-frame .saopopup-bottom {
   display: flex;
 
-  line-height: 50px;
+  line-height: 1;
 
   background: linear-gradient(to top, #ffffff, #f9f9f9);
 }
@@ -49,8 +49,8 @@
 .saopopup-button-no,
 .saopopup-button-ok {
   flex: 1;
-  max-width: 50px;
-  margin: 0 auto;
+  max-width: 40px;
+  margin: 5px auto 0 auto;
   cursor: pointer;
 }
 .saopopup-button-no{
