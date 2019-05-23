@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    /* background-color: #a5a5a5; */
+  }
+  .saobubble-menu{
+    margin: 0 auto;
+  }
+  
+  .saobubble-ul{
+    font-size: 0px;
+    position: relative;
+  }
+  .saobubble-ul .bubble-item{
+    list-style:none;
+    display: inline-block;
+    cursor: pointer;
+
+    width: 100px;
+    text-align: center;
+  }
+  .saobubble-ul .bubble-item:hover{
+    color: aqua;
+  }
+  .saobubble-ul .bubble-item a{
+    position: relative;
+    line-height: 40px;
+    display: block;
+    font-size: 20px;
+  }
+  .saobubble-ul .menu-bubble::before{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #ffc34371;
+    border-radius: 40px;
+    height: 40px;
+    opacity: 0;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  .saobubble-ul .menu-bubble{
+    transition: all cubic-bezier(.3,1.5,.5,1) .7s;
+  }
+  .saobubble-ul[li-hovered] .menu-bubble::before{
+    opacity: 1;
+  }
+  </style>
+</head>
+<body>
+  <div style="height:300px"></div>
+  <div class="saobubble-menu">
+    <ul class="saobubble-ul">
+      <li class="menu-bubble"></li>
+      <li class="bubble-item"><a>首页</a></li>
+      <li class="bubble-item"><a>活动</a></li>
+      <li class="bubble-item"><a>公告</a></li>
+    </ul>
+  </div>
+  <script>
+  function MPBCBubblemenu(theNode){
+    var _node = document.querySelector(theNode);
+    if(!_node){
+      throw new Error('没有找到目标节点：'+theNode);
+    }
+    var _ulNode = _node.getElementsByClassName('saobubble-ul')[0];
+    var _liWidth = _node.getElementsByClassName('bubble-item')[0].offsetWidth;
+    var _menuBubble = _node.getElementsByClassName('menu-bubble')[0];
+
+    _menuBubble.style = "position:absolute;top:0;";
+    _menuBubble.style.width = _liWidth + 'px';
+    function bubbleLeft(left){
+      _menuBubble.style.left = left + 'px';
+    }
+    _ulNode.addEventListener('mouseover',function(ev){
+      var ev = ev || window.event;
+      var target = ev.target || ev.srcElement;
+      // target.parentNode.classList.add('hover');
+      if(target!=_ulNode){
+        _ulNode.setAttribute('li-hovered','');
+      }
+      bubbleLeft(target.offsetLeft)
+    })
+    _ulNode.addEventListener('mouseout',function(ev){
+      var ev = ev || window.event;
+      var target = ev.target || ev.srcElement;
+      // target.parentNode.classList.remove('hover');
+      _ulNode.removeAttribute('li-hovered');
+    })
+  }
+  new MPBCBubblemenu('.saobubble-menu');
+  </script>
+</body>
+</html>
