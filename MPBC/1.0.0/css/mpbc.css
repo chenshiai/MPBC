@@ -1,0 +1,68 @@
+.saopopup-container {
+  height: 39px;
+  border: 1px #ffffff solid;
+  overflow: hidden;
+  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+
+  box-shadow: 0 0 15px #d7d7dd;
+  transition: all 0.1s linear;
+}
+
+.saopopup-frame {
+  max-width: 100%;
+  border-radius: 2px;
+
+  text-align: center;
+}
+
+.saopopup-frame .saopopup-title {
+  line-height: 40px;
+  font-size: 20px;
+  letter-spacing: 1px;
+
+  background: linear-gradient(#f1f1f1, #fbfbfb);
+}
+
+.saopopup-frame .saopopup-text {
+  padding: 10px 0;
+  
+  font-size: 13px;
+  color: #4d4d4d;
+
+  background-color: #e4e4e4;
+  box-shadow: 0px 20px 20px -20px #a3a3a3 inset, 0px -20px 20px -20px #a3a3a3 inset;
+}
+
+.saopopup-frame .saopopup-bottom {
+  display: flex;
+
+  line-height: 1;
+
+  background: linear-gradient(to top, #ffffff, #f9f9f9);
+}
+
+.saopopup-button-no,
+.saopopup-button-ok {
+  flex: 1;
+  max-width: 40px;
+  margin: 5px auto 0 auto;
+  cursor: pointer;
+}
+.saopopup-button-no{
+  color: red
+}
+.saopopup-button-ok {
+  color: blue
+}
+.saopopup-open {
+  display: block;
+}
+
+.saopopup-close {
+  display: none;
+}
