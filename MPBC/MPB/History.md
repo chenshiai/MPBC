@@ -2,7 +2,7 @@
 ==================
   
   * Add new function "paging" and "binarySearch"
-  * Change the function "XMLHttpRequest" to "HTTP"
+  * Change the function "XMLHttpRequest" name to "HTTP"
 
 1.0.0 / 2019-04-28
 ==================
