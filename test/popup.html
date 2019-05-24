@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../MPBC.css">
+  <style>
+  </style>
+</head>
+
+<body>
+  <div class="saopopup-container">
+    <div class="saopopup-frame">
+      <div class="saopopup-title"></div>
+      <div class="saopopup-text"></div>
+      <div class="saopopup-bottom">
+        <div class="saopopup-button-no">
+
+          <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+            <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+            <g>
+              <title>background</title>
+              <rect fill="rgba(0,0,0,0)" id="canvas_background" height="42" width="42" y="-1" x="-1" />
+              <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+                <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" />
+              </g>
+            </g>
+            <g>
+              <title>Layer 1</title>
+              <ellipse stroke="#e34f61" ry="19.19463" rx="19.19463" id="svg_1" cy="20.058724" cx="20.067113"
+                stroke-width="1.5" fill="#fff" />
+              <ellipse stroke="#e34f61" ry="1.81208" rx="1.81208" id="svg_2" cy="19.999999" cx="19.999999"
+                stroke-opacity="null" stroke-width="29" fill="#fff" />
+              <rect stroke="#000" transform="rotate(45 20.000000000000007,19.999999999999996) " id="svg_9"
+                height="4.966443" width="18.422309" y="17.516778" x="10.788844" fill-opacity="null"
+                stroke-opacity="null" stroke-width="0" fill="#fff" />
+              <rect stroke="#000" transform="rotate(-45 19.999999999999996,19.999999999999996) " id="svg_10"
+                height="4.966443" width="17.947741" y="17.516779" x="11.026131" fill-opacity="null"
+                stroke-opacity="null" stroke-width="0" fill="#fff" />
+            </g>
+          </svg>
+        </div>
+        <div class="saopopup-button-ok">
+          <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg">
+            <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+            <g>
+              <title>background</title>
+              <rect fill="rgba(0,0,0,0)" id="canvas_background" height="42" width="42" y="-1" x="-1" />
+              <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+                <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" />
+              </g>
+            </g>
+            <g>
+              <title>Layer 1</title>
+              <ellipse stroke="#4d97f2" ry="19.19463" rx="19.19463" id="svg_1" cy="20.058724" cx="20.067113"
+                stroke-width="1.5" fill="#fff" />
+              <ellipse ry="13.020134" rx="13.020134" id="svg_2" cy="20.058725" cx="20.201342" fill-opacity="0"
+                stroke-opacity="null" stroke-width="7.5" stroke="#4d97f2" fill="#fff" />
+              <ellipse ry="2.416107" rx="2.416107" id="svg_3" cy="20.192953" cx="20.067114" fill-opacity="0"
+                stroke-opacity="null" stroke-width="7.5" stroke="#4d97f2" fill="#fff" />
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../MPBC.js"></script>
+  <script>
+    var p = new MPBpopup('.saopopup-container', {
+      title: "测试用标题",
+      text: "测试用内容<p>第二行测试内容</p><p>第三行测试内容</p>",
+      mode:'auto',
+      okFunc: () => { p.hiddenPopup() },
+      oneKey: false,
+      width: 300
+    });
+    function secend(){
+      console.log("第一次弹窗ok")
+      p.showPopup({
+        title:"SEC",
+        text:"第二次弹窗",
+        oneKey:false,
+        okFunc:()=>{p.hiddenPopup();console.log("第二次弹窗ok")}
+      })
+      console.log("第二次弹窗执行")
+    }
+    p.showPopup({
+      title:"测试",
+      text:"第一次弹窗",
+      mode:"confirm",
+      okFunc:secend,
+      oneKey:true
+    });
+  </script>
+</body>
+
+</html>
