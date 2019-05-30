@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>截流</title>
+</head>
+
+<body>
+  <div style="height: 3000px"></div>
+  <script>
+    // 节流实现方案有 2 种
+
+    // 第一种是用时间戳来判断是否已到执行时间，记录上次执行的时间戳，然后每次触发事件执行回调，
+    // 回调中判断当前时间戳距离上次执行时间戳的间隔是否已经达到时间差（Xms） ，
+    // 如果是则执行，并更新上次执行的时间戳，如此循环。
+
+    // 第二种方法是使用定时器，比如当 scroll 事件刚触发时，
+    // 打印一个 hello world，然后设置个 1000ms 的定时器，
+    // 此后每次触发 scroll 事件触发回调，如果已经存在定时器，
+    // 则回调不执行方法，直到定时器触发，handler 被清除，然后重新设置定时器。
+
+    // 作者：木易杨说
+    // 链接：https://juejin.im/post/5cedd320f265da1ba77c85be
+    // 来源：掘金
+    // 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+    function throttle(func, wait = 50) {
+      // 时间戳版本 
+      // 事件刚刚触发时 会立刻调用一次回调，因为 previous 初始值为0 now - previous > wait
+      let previous = 0;
+      return function (...args) {
+        let now = +new Date()
+        if (now - previous > wait) {
+          previous = now
+          func.apply(this, args)
+        }
+      }
+    }
+    function throttleTimeout(func, wait = 50) {
+      // 定时器版本
+      var timer = null
+      var throttle = function (...args) {
+        if (!timer) {
+          func.apply(this, args)
+          timer = setTimeout(function () {
+            clearTimeout(timer)
+            timer = null
+          }, wait)
+        }
+      }
+      throttle.cancel = function () {
+        clearTimeout(timer)
+        timer = null
+      }
+      return throttle
+    }
+    function todo(msg) {
+      console.log("执行了", msg)
+    }
+    const a = throttleTimeout(()=>{console.log("a")}, 1000)
+    const c = throttleTimeout(()=>{console.log("c")}, 1000)
+    // window.addEventListener('scroll', a)
+    // setInterval(c, 10)
+
+    function processor(abort = function () { }, time = 100) {
+      var timer = null,
+        self = this;
+      var process = function (args) {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          abort(args);
+        }, time)
+      }
+      return process
+    }
+    const b = processor(args=>{console.log(args)})
+    window.addEventListener('scroll', b)
+    const d = processor(()=>{console.log("d")})
+    window.addEventListener('scroll', d)
+  </script>
+</body>
+
+</html>
