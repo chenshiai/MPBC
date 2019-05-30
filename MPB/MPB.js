@@ -105,6 +105,7 @@ const MPB = {
       return this.queue.length;
     }
   },
+  /** ver:1.1.2 下一个版本删除该方法 */
   "Processor": function (abort, time) {
     this.timeoutId = null;
     this.time = time || 100;
@@ -117,12 +118,40 @@ const MPB = {
       }, self.time)
     }
   },
+  "processor": function (abort = function () { }, time = 100) {
+    var timer = null,
+      self = this;
+    var process = function (args) {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
+        abort(args);
+      }, time)
+    }
+    return process
+  },
+  "throttle": function (func, wait = 50) {
+    var timer = null
+    var throttle = function (...args) {
+      if (!timer) {
+        func.apply(this, args)
+        timer = setTimeout(function () {
+          clearTimeout(timer)
+          timer = null
+        }, wait)
+      }
+    }
+    throttle.cancel = function () {
+      clearTimeout(timer)
+      timer = null
+    }
+    return throttle
+  },
   "ajax": function ({
     method = "get",
     url = MPB.error('地址都不给人家！'),
     data = null,
     contentType = "application/x-www-form-urlencoded",
-    dataType = "",// 尚未实现.....
+    dataType = "",// 约定数据格式
     async = true,
     cache = true,
     timeout = 60000,
@@ -161,7 +190,7 @@ const MPB = {
   },
   "request": function ({
     url,
-    needSubDomain = false,
+    needSubDomain = false, // 是否有子域名 这是一个知识点 但没有实现
     method = 'get',
     data = null,
     success = function () { },
