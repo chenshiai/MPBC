@@ -2,7 +2,7 @@
  * SAOMDPB项目用对象字面量API  
  * 作者：丨ConGreat  
  * 起始时间：2019-04-23  
- * 最后修改时间：2019-05-23
+ * 最后修改时间：2019-05-31
  */
 const MPB = {
   "Object": {
@@ -105,29 +105,28 @@ const MPB = {
       return this.queue.length;
     }
   },
-  /** ver:1.1.2 下一个版本删除该方法 */
-  "Processor": function (abort, time) {
-    this.timeoutId = null;
-    this.time = time || 100;
-    this.abort = abort || function () { };
-    let self = this;
-    this.process = function () {
-      clearTimeout(self.timeoutId);
-      self.timeoutId = setTimeout(function () {
-        self.abort();
-      }, self.time)
+  "debounce": function (
+    abort = MPB.error('使用debounce，至少传入一个方法'),
+    time = 100,
+    options = { leading: true, trailing: true, context: null }) {
+    var timer = null;
+    var process = function (...args) {
+      if (timer) { clearTimeout(timer) }
+      if (options.leading && !timer) {
+        timer = setTimeout(null, time);
+        abort.apply(options.context, args)
+      } else if (options.trailing) {
+        timer = setTimeout(() => {
+          abort.apply(options.context, args);
+          timer = null;
+        }, time)
+      }
     }
-  },
-  "processor": function (abort = function () { }, time = 100) {
-    var timer = null,
-      self = this;
-    var process = function (args) {
+    process.cancel = function () {
       clearTimeout(timer);
-      timer = setTimeout(function () {
-        abort(args);
-      }, time)
+      timer = null;
     }
-    return process
+    return process;
   },
   "throttle": function (func, wait = 50) {
     var timer = null
@@ -146,43 +145,65 @@ const MPB = {
     }
     return throttle
   },
+  "isJSON": function (str) {
+    if (typeof str === 'string') {
+      try {
+        var obj = JSON.parse(str);
+        if (typeof obj === 'object' && obj) {
+          return true;
+        } else {
+          return false;
+        }
+
+      } catch (e) {
+        console.log('error：' + str + '!!!' + e);
+        return false;
+      }
+    }
+    console.log('It is not a string!')
+  },
   "ajax": function ({
     method = "get",
     url = MPB.error('地址都不给人家！'),
     data = null,
     contentType = "application/x-www-form-urlencoded",
-    dataType = "",// 约定数据格式
+    dataType = "json",// 约定数据格式
     async = true,
     cache = true,
-    timeout = 60000,
+    timeout = 10000,
     beforeSend = function () { },
     success = MPB.error('给我一个成功回调函数嘛！'),
     error = MPB.error("服务器返回错误！"),
-    complete = function () { },
-    timeoutTodo = function () { }
+    complete = function () { }
   }) {
-    if (typeof url === "function") {
-      url();
-    }
     var xhr = MPB.HTTP();
+
     xhr.open(method, url, async);
     xhr.setRequestHeader("Content-type", contentType);
+    if (contentType === 'application/json') {
+      var data = JSON.stringify(data);
+      MPB.isJSON(data) ? true : MPB.error('数据传输格式错误！');
+    }
     beforeSend();
     xhr.send(data);
     var timer = setTimeout(function () {
       xhr.abort();
-      timeoutTodo();
+      error();
     }, timeout)
 
     xhr.onreadystatechange = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
         clearTimeout(timer);
         var responseText = xhr.responseText;
-        var res = JSON.parse(responseText);
+        try {
+          var res = JSON.parse(responseText);
+        } catch {
+          var res = responseText;
+        }
         if (res) {
           success(res);
         } else {
-          error(res);
+          error();
         }
         complete(res);
       }

@@ -1,3 +1,10 @@
+1.1.3 / 2019-05-31
+
+  * 修正细微错误 Processor 方法移除
+  * 新增isJSON（判断是否为json的字符串）
+  * 移除ajax方法的参数 timeoutTodo
+  * 修复了ajax的bug，该bug导致：当data和contentType类型不符合时，没有提示错误，导致后端接收数据失败
+
 1.1.2 / 2019-05-30
 
   * 新增 processor（防抖） throttle（节流）
