@@ -2,7 +2,7 @@
  * SAOMDPB项目用对象字面量API  
  * 作者：丨ConGreat  
  * 起始时间：2019-04-23  
- * 最后修改时间：2019-05-31
+ * 最后修改时间：2019-06-03
  */
 const MPB = {
   "Object": {
@@ -173,7 +173,9 @@ const MPB = {
     timeout = 10000,
     beforeSend = function () { },
     success = MPB.error('给我一个成功回调函数嘛！'),
-    error = MPB.error("服务器返回错误！"),
+    error = function(){
+      MPB.error("服务器返回错误！");
+    },
     complete = function () { }
   }) {
     var xhr = MPB.HTTP();
