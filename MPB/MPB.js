@@ -6,7 +6,6 @@
  */
 const MPB = {
   "Object": {
-    xhr: null,
     ajax: null,
     scrollTop: 0
   },
@@ -14,16 +13,13 @@ const MPB = {
     throw new Error(msg);
   },
   "HTTP": function (bool) {
-    if (MPB.Object.xhr === null) {
       var xhr = null;
       if (window.XMLHttpRequest) {
         xhr = new XMLHttpRequest();
       } else {
         xhr = new ActiveXObject("Microsoft.XMLHTTP");
       }
-      MPB.Object.xhr = xhr;
-    }
-    return MPB.Object.xhr;
+    return xhr;
   },
   "Timer": function (abort_u, time_u) {
     var _abort = abort_u,
